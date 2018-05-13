@@ -1,2 +1,6 @@
-# cimg
-Python Script which helps you to define which of the colors into the image uses more.
+# Cimg
+Define the most used colors into your image.
+
+## Usage
+      python3 cimg.py imagefile nOfColors
+If you type name of file which contains the image it will try to find it in current directory. To take image from somewhere else you need to write full path or '~/path' for simplicity.
