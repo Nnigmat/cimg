@@ -1,2 +1,6 @@
-# cimg
-Python Script which helps you to define which of the colors into the image uses more.
+# Cimg
+Define the most used colors into your image.
+
+## Usage
+    cimg.py image.format 5
+
