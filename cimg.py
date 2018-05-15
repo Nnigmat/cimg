@@ -15,6 +15,7 @@ try:
     path = str(sys.argv[1]) 
 except:
     print("Sorry bro, you haven't add file")
+    sys.exit()
 
 # Try to read how many colors we need to return to the user
 try:
@@ -52,10 +53,10 @@ for pixel in im.getdata():
 res = ''
 i = 0
 for el in sorted(by_color, key=by_color.get, reverse=True):
-    res += '#' + str(hex(el[0]))[2:].upper() + str(hex(el[1]))[2:].upper() + str(hex(el[2]))[2:].upper() + ', '
+    color = '' + str(hex(el[0]))[2:].upper() + str(hex(el[1]))[2:].upper() + str(hex(el[2]))[2:].upper() 
+    res += '\x1b[48;2;' + str(el[0]) + ';' + str(el[1]) + ';' + str(el[2]) + 'm' + color + '\x1b[0m'
     i += 1
     if i == nOfColors: 
         break
 
-print(res.rstrip(', ')) 
-
+print(res) 
