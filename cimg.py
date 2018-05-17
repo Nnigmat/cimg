@@ -56,6 +56,7 @@ for pixel in im.getdata():
 
 res_array = sorted(by_color, key=by_color.get, reverse=True)
 res_array.sort(key=sum, reverse=True)
+nOfColors = len(res_array) if len(res_array) < nOfColors else nOfColors
 if __name__ == '__main__' and console: 
     # Sort all elements in dictionary of pixels and return n the most used
     res = ''

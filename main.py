@@ -41,12 +41,20 @@ class drawColors(QWidget):
         # Add buttons to the screen 
         for i in range(self.n):
             el = self.colors[i]
-            color = '' + str(hex(el[0]))[2:].upper() + str(hex(el[1]))[2:].upper() + str(hex(el[2]))[2:].upper() 
+
+            color = ''
+            for j in range(3):
+                temp =  str(hex(el[j]))[2:].upper() 
+                if temp != '0':
+                    color += temp if len(temp) == 2 else '0' + temp
+                else:
+                    color += '00'
+
             btn = QPushButton('   ', self)
             self.buttons.append(btn)
             btn.resize(self.btnWidth, self.btnHeight)
             btn.move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
-            btn.setStyleSheet('QPushButton{ background-color: #' + color + ' } QPushButton:active { background-color: #' + color + '}') 
+            btn.setStyleSheet('background-color: #' + color) 
             btn.clicked.connect(self.buttonClicked)
             btn.setDefault(False)
             btn.setAutoDefault(False)
