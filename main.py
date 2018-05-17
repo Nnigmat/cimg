@@ -73,7 +73,7 @@ class drawColors(QWidget):
     
 
     def copy(self):
-        QtGui.QApplication.clipboard().setText("your_text")
+        clipboard = QApplication.clipboard().setText("Hello")
    
     def undo(self):
         # If all buttons on the screen do nothing 
