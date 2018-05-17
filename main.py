@@ -9,9 +9,11 @@ class drawColors(QWidget):
 
     # All buttons with color that will be printed into the screen
     buttons = []
+    buttonsColor = []
 
     # Using as stack for deleted buttons to return them back if user want
     deletedButtons = []
+    deletedButtonsColor = []
 
     def __init__(self, colors, n):
         super().__init__()
@@ -51,7 +53,10 @@ class drawColors(QWidget):
                 color += temp if len(temp) == 2 else '0' + temp
 
             btn = QPushButton('   ', self)
+
             self.buttons.append(btn)
+            self.buttonsColor.append('#' + color)
+
             btn.resize(self.btnWidth, self.btnHeight)
             btn.move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
             btn.setStyleSheet('background-color: #' + color) 
@@ -75,8 +80,13 @@ class drawColors(QWidget):
     
 
     def copy(self):
+        res = ''
+        for el in self.buttonsColor:
+            res += el + ', '            
+
+
         # Copy to clipboard 
-        pyperclip.copy('Isenmesez Balalar')   
+        pyperclip.copy(res.strip(', '))   
 
 
     def undo(self):
@@ -89,6 +99,7 @@ class drawColors(QWidget):
         # el - QPushButton object, index - from where from self.buttons it was taken
         lastEl = self.deletedButtons.pop()
         self.buttons.insert(lastEl[1], lastEl[0])   
+        self.buttonsColor.insert(lastEl[1],self.deletedButtonsColor.pop())
 
         # Increase self.n which denotes current number of color in the screen
         # If self.n >= self.initN then we just make it equals to initN which denotes starter number of colors
@@ -121,6 +132,7 @@ class drawColors(QWidget):
         for i in range(self.n):
             if self.buttons[i] == sender:
                 self.deletedButtons.append((self.buttons.pop(i), i)) 
+                self.deletedButtonsColor.append(self.buttonsColor.pop(i))
                 self.n -= 1 
                 break
        
