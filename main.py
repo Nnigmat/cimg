@@ -1,4 +1,5 @@
 import sys
+import pyperclip
 from PyQt5.QtWidgets import QMainWindow, QToolTip,  QApplication, QWidget, QPushButton
 from PyQt5 import QtGui
 from PyQt5 import QtCore
@@ -65,7 +66,8 @@ class drawColors(QWidget):
 
         # Add button Copy to clipboard
         clip = QPushButton('Copy to clipboard', self) 
-        clip.move(self.btnStartWidthPosition, self.btnHeight + self.btnStartHeightPosition * 2)
+     
+        clip.move(self.btnStartWidthPosition * 2 + undo.width(), self.btnHeight + self.btnStartHeightPosition * 2)
         clip.clicked.connect(self.copy)
 
         # Start current QWidget
@@ -73,8 +75,10 @@ class drawColors(QWidget):
     
 
     def copy(self):
-        clipboard = QApplication.clipboard().setText("Hello")
-   
+        # Copy to clipboard 
+        pyperclip.copy('Isenmesez Balalar')   
+
+
     def undo(self):
         # If all buttons on the screen do nothing 
         if len(self.deletedButtons) == 0:
