@@ -7,6 +7,9 @@ from PyQt5 import QtCore
 
 class drawColors(QWidget):
 
+    # Previous button will be used for changing button's place
+    previousButton = None
+
     # All buttons with color that will be printed into the screen
     buttons = []
     buttonsColor = []
@@ -128,31 +131,54 @@ class drawColors(QWidget):
         # Get button that have been clicked
         sender = self.sender()
         
-        # Delete this button and decrease n
-        for i in range(self.n):
-            if self.buttons[i] == sender:
-                self.deletedButtons.append((self.buttons.pop(i), i)) 
-                self.deletedButtonsColor.append(self.buttonsColor.pop(i))
-                self.n -= 1 
-                break
+        if self.previousButton == sender:
+            # Delete this button and decrease n
+            for i in range(self.n):
+                if self.buttons[i] == sender:
+                    self.deletedButtons.append((self.buttons.pop(i), i)) 
+                    self.deletedButtonsColor.append(self.buttonsColor.pop(i))
+                    self.n -= 1 
+                    break
        
-        # Make button invisible if user will want to come back 
-        sender.setVisible(False)        
+            # Make button invisible if user will want to come back 
+            sender.setVisible(False)        
 
 
-        # Code for deleting, left it for myself sender.setParent(QWidget())
+            # Code for deleting, left it for myself sender.setParent(QWidget())
 
-        # Change btnWidth, because we've decreased number of buttons on screen
-        self.btnWidth = int((self.windowWidth - self.btnStartWidthPosition*2)/self.n) if self.n != 0 else 1
+            # Change btnWidth, because we've decreased number of buttons on screen
+            self.btnWidth = int((self.windowWidth - self.btnStartWidthPosition*2)/self.n) if self.n != 0 else 1
 
-        # Change buttons's positions and sizes, it need to be justified
-        for i in range(self.n-1):
-            self.buttons[i].resize(self.btnWidth, self.btnHeight)
-            self.buttons[i].move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
+             # Change buttons's positions and sizes, it need to be justified
+            for i in range(self.n-1):
+                self.buttons[i].resize(self.btnWidth, self.btnHeight)
+                self.buttons[i].move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
         
-        # If exist button with self.n - 1 index, then we resize it till the border
-        if self.n - 1 >= 0:
-            self.buttons[self.n-1].resize(self.windowWidth - self.btnStartWidthPosition*2 - self.btnWidth*(self.n-1) , self.btnHeight)
-            self.buttons[self.n-1].move(self.btnWidth*(self.n-1) + self.btnStartWidthPosition, self.btnStartHeightPosition)
+            # If exist button with self.n - 1 index, then we resize it till the border
+            if self.n - 1 >= 0:
+                self.buttons[self.n-1].resize(self.windowWidth - self.btnStartWidthPosition*2 - self.btnWidth*(self.n-1) , self.btnHeight)
+                self.buttons[self.n-1].move(self.btnWidth*(self.n-1) + self.btnStartWidthPosition, self.btnStartHeightPosition)
+            self.previousButton = None
+        elif self.previousButton == None:
+            self.previousButton = sender
+        else:
+            prevIndex = 0
+            curIndex = 0
+            for i in range(self.n):
+                if self.buttons[i] == self.previousButton:             
+                    prevIndex = i
+                if self.buttons[i] == sender:
+                    curIndex = i
 
-
+            self.buttons.insert(curIndex, self.buttons.pop(prevIndex))
+            self.buttonsColor.insert(curIndex, self.buttonsColor.pop(prevIndex))
+            
+            self.previousButton = None
+            for i in range(self.n-1):
+                self.buttons[i].resize(self.btnWidth, self.btnHeight)
+                self.buttons[i].move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
+        
+            # If exist button with self.n - 1 index, then we resize it till the border
+            if self.n - 1 >= 0:
+                self.buttons[self.n-1].resize(self.windowWidth - self.btnStartWidthPosition*2 - self.btnWidth*(self.n-1) , self.btnHeight)
+                self.buttons[self.n-1].move(self.btnWidth*(self.n-1) + self.btnStartWidthPosition, self.btnStartHeightPosition)
