@@ -44,8 +44,8 @@ else:
 
 # Convert opened image to RGB format
 # We do this, because for example Gif images stores in another format
-im = im.convert('RGBA')
-im = im.filter(ImageFilter.GaussianBlur(10))
+im = im.convert('RGB')
+im = im.filter(ImageFilter.BoxBlur(10))
 im = im.convert('P', palette = Image.ADAPTIVE, colors=nOfColors).convert('RGB', palette = Image.ADAPTIVE)
 
 # Count all pixels in image

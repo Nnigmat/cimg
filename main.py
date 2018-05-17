@@ -42,13 +42,12 @@ class drawColors(QWidget):
         for i in range(self.n):
             el = self.colors[i]
 
+            # Parse colors from tuple (x, y, z)
+            # Check cases when element is only one digit and add 0's to this number 
             color = ''
             for j in range(3):
                 temp =  str(hex(el[j]))[2:].upper() 
-                if temp != '0':
-                    color += temp if len(temp) == 2 else '0' + temp
-                else:
-                    color += '00'
+                color += temp if len(temp) == 2 else '0' + temp
 
             btn = QPushButton('   ', self)
             self.buttons.append(btn)
@@ -60,13 +59,21 @@ class drawColors(QWidget):
             btn.setAutoDefault(False)
 
         # Add button Undo and connect it to self
-        btn = QPushButton('Undo', self)      
-        btn.move(self.btnStartWidthPosition, self.btnHeight + self.btnStartHeightPosition * 2) 
-        btn.clicked.connect(self.undo)
+        undo = QPushButton('Undo', self)      
+        undo.move(self.btnStartWidthPosition, self.btnHeight + self.btnStartHeightPosition * 2) 
+        undo.clicked.connect(self.undo)
+
+        # Add button Copy to clipboard
+        clip = QPushButton('Copy to clipboard', self) 
+        clip.move(self.btnStartWidthPosition, self.btnHeight + self.btnStartHeightPosition * 2)
+        clip.clicked.connect(self.copy)
 
         # Start current QWidget
         self.show()
     
+
+    def copy(self):
+        QtGui.QApplication.clipboard().setText("your_text")
    
     def undo(self):
         # If all buttons on the screen do nothing 
