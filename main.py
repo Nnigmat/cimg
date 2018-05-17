@@ -160,20 +160,33 @@ class drawColors(QWidget):
                 self.buttons[self.n-1].move(self.btnWidth*(self.n-1) + self.btnStartWidthPosition, self.btnStartHeightPosition)
             self.previousButton = None
         elif self.previousButton == None:
+            
+            # If self.previousButton have no button then we just make it equal to sender
             self.previousButton = sender
+
         else:
+            
+            # Previous index store index to previous button, current index
+            # store index to currenter sender in self.buttons array
             prevIndex = 0
             curIndex = 0
+ 
+            # Search in self.buttons indexes to buttons
             for i in range(self.n):
                 if self.buttons[i] == self.previousButton:             
                     prevIndex = i
                 if self.buttons[i] == sender:
                     curIndex = i
 
+            # If previous button was at right of current, then it goes to left of the current button
+            # Otherwise left
             self.buttons.insert(curIndex, self.buttons.pop(prevIndex))
             self.buttonsColor.insert(curIndex, self.buttonsColor.pop(prevIndex))
             
+            # Make self.previousButton equals to None
             self.previousButton = None
+ 
+            # Redraw buttons onto the screen
             for i in range(self.n-1):
                 self.buttons[i].resize(self.btnWidth, self.btnHeight)
                 self.buttons[i].move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
