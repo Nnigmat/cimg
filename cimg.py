@@ -62,8 +62,8 @@ if __name__ == '__main__' and console:
     color_res = ''
     i = 0
     for el in res_array:
-        color_res += '#' + color + ', ' 
         color = '' + str(hex(el[0]))[2:].upper() + str(hex(el[1]))[2:].upper() + str(hex(el[2]))[2:].upper() 
+        color_res += '#' + color + ', ' 
         res += '\x1b[48;2;' + str(el[0]) + ';' + str(el[1]) + ';' + str(el[2]) + 'm                  \x1b[0m  #' + color + '\n'
         i += 1
         if i >= nOfColors: 
@@ -73,4 +73,7 @@ if __name__ == '__main__' and console:
     print(res) 
 else:
     from main import drawColors 
-    drawColors(res_array, nOfColors)
+    from PyQt5.QtWidgets import QApplication
+    app = QApplication(sys.argv)
+    window = drawColors(res_array, nOfColors)
+    sys.exit(app.exec_())
