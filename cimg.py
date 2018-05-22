@@ -73,7 +73,7 @@ if __name__ == '__main__' and console:
     res += color_res.strip(', ')
     print(res) 
 else:
-    from main import drawColors 
+    from drawWindow import drawColors 
     from PyQt5.QtWidgets import QApplication
     app = QApplication(sys.argv)
     window = drawColors(res_array, nOfColors)
