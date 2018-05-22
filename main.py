@@ -20,7 +20,8 @@ class drawColors(QWidget):
 
     def __init__(self, colors, n):
         super().__init__()
-
+    
+        #self.setStyleSheet('background-color: #000000')
         self.setFocusPolicy(QtCore.Qt.NoFocus)
         # Store colors and n to drawColors's object
         self.colors = colors
@@ -62,7 +63,8 @@ class drawColors(QWidget):
 
             btn.resize(self.btnWidth, self.btnHeight)
             btn.move(self.btnWidth*i + self.btnStartWidthPosition, self.btnStartHeightPosition)
-            btn.setStyleSheet('background-color: #' + color) 
+            btn.setStyleSheet('background-color: #' + color + ';' +
+                              'border: 0px') 
             btn.clicked.connect(self.buttonClicked)
             btn.setDefault(False)
             btn.setAutoDefault(False)

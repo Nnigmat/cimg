@@ -5,6 +5,13 @@ import sys
 import os
 from collections import defaultdict
 
+
+if '--help' in sys.argv:
+    print('''
+    
+    ''')
+
+
 # Variables declaration
 home = '/home/nigma/'
 path = None
@@ -71,7 +78,7 @@ if __name__ == '__main__' and console:
             break
 
     res += color_res.strip(', ')
-    print(res) 
+    print(res)
 else:
     from main import drawColors 
     from PyQt5.QtWidgets import QApplication
