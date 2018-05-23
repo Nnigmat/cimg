@@ -6,12 +6,6 @@ import os
 from collections import defaultdict
 
 
-if '--help' in sys.argv:
-    print('''
-    
-    ''')
-
-
 # Variables declaration
 home = '/home/nigma/'
 path = None
@@ -38,13 +32,17 @@ console = True if '-c' in sys.argv else False
 # If user pass to us path with /home... or ~/ we need to find this file into filesystem 
 # Otherwise this image contains in current directory, or not :)
 im = None
-if path and path != '' and (not '/home' in path or not '~/' in path):
-    im = Image.open(os.getcwd() + '/' + path)
-elif path and path != '' and '~/' in path:
-    im = Image.open(home + path)
-elif path and path != '':
-    im = Image.open(path)
-else:
+
+
+# Try to find image
+try:
+    if path and path != '' and (not '/home' in path or not '~/' in path):
+        im = Image.open(os.getcwd() + '/' + path)
+    elif path and path != '' and '~/' in path:
+        im = Image.open(home + path)
+    elif path and path != '':
+        im = Image.open(path)
+except:
     print('Sorry but path to image or its name is invalid')
     sys.exit()
 
@@ -80,7 +78,7 @@ if __name__ == '__main__' and console:
     res += color_res.strip(', ')
     print(res)
 else:
-    from main import drawColors 
+    from drawWindow import drawColors 
     from PyQt5.QtWidgets import QApplication
     app = QApplication(sys.argv)
     window = drawColors(res_array, nOfColors)
